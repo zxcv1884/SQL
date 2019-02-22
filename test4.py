@@ -70,7 +70,9 @@ class ipcamCapture:
         self.rgb_small_frame = []
         self.small_frame = []
 	# 攝影機連接。
-        self.capture = cv2.VideoCapture(0)
+		capForFocal = cv2.VideoCapture(0)
+		_,self.capture=capForFocal.read()
+		capForFocal.release()
         self.face_locations = []
         self.face_encodings = []
         self.face_names = []
@@ -80,7 +82,7 @@ class ipcamCapture:
 	# 把程式放進子執行緒，daemon=True 表示該執行緒會隨著主執行緒關閉而關閉。
         print('ipcam started!')
         threading.Thread(target=self.queryframe, daemon=True, args=()).start()
-        print('ipcam')
+        print('ipcam')	
         
         threading.Thread(target=self.identificationframe, daemon=True, args=()).start()
     def stop(self):
